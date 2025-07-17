@@ -170,7 +170,7 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   const { token } = req.params;
-  const { newPassword } = req.body;
+  const { password } = req.body;
   try {
     const user = await User.findOne({
       resetPasswordToken: token,
@@ -181,7 +181,7 @@ const resetPassword = async (req, res) => {
     }
 
     // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     // Update user's password and clear reset token
     user.password = hashedPassword;
     user.resetPasswordToken = undefined; // Clear the reset token
